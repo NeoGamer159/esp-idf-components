@@ -67,7 +67,7 @@ static void lcd_send_command(i2c_master_dev_handle_t dev, uint8_t cmd) {
  * @param str Null-terminated string to display
  * @note This function iterates through each character in the string and sends it to the LCD using the lcd_send_char function. The string must be null-terminated.
  */
-static void lcd_send_string(i2c_master_dev_handle_t dev, const char* str) {
+void lcd_send_string(i2c_master_dev_handle_t dev, const char* str) {
     while(*str) {
         lcd_send_char(dev, *str++);
     }
@@ -78,7 +78,7 @@ static void lcd_send_string(i2c_master_dev_handle_t dev, const char* str) {
  * @param dev I2C master device handle
  * @note This function must be called before any other LCD operations. I2C has to be initialized.
  */
-static void lcd_init(i2c_master_dev_handle_t dev) {
+void lcd_init(i2c_master_dev_handle_t dev) {
     // Wait for LCD to power up
     LCD_DELAY_MS(50); 
     // Function set: 8-bit mode
@@ -106,7 +106,7 @@ static void lcd_init(i2c_master_dev_handle_t dev) {
  * @param dev I2C master device handle
  * @note This function sends the clear command to the LCD and waits for it to process.
  */
-static void lcd_clear(i2c_master_dev_handle_t dev) {
+void lcd_clear(i2c_master_dev_handle_t dev) {
     lcd_send_command(dev, 0x01); 
     LCD_DELAY_MS(5);
 }
@@ -118,6 +118,6 @@ static void lcd_clear(i2c_master_dev_handle_t dev) {
  * @param col Column number (0-15)
  * @note This function calculates the DDRAM address based on the row and column and sends the appropriate command to set the cursor position.
  */
-static void lcd_set_cursor(i2c_master_dev_handle_t dev, uint8_t row, uint8_t col) {
+void lcd_set_cursor(i2c_master_dev_handle_t dev, uint8_t row, uint8_t col) {
     lcd_send_command(dev, 0x80 + (row ? 0x40 : 0) + col);
 }
