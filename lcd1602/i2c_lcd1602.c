@@ -58,3 +58,7 @@ static void lcd_init(i2c_master_dev_handle_t dev) {
     // Display on, cursor off, blink off
     lcd_send_command(dev, 0x0C);    
 }
+static void lcd_clear(i2c_master_dev_handle_t dev) {
+    lcd_send_command(dev, 0x01); 
+    LCD_DELAY_MS(5);
+}
