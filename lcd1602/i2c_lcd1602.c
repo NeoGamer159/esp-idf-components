@@ -1,13 +1,5 @@
 #include "i2c_lcd1602.h"
-// Some IDEs/translation units may not resolve the ESP-IDF driver header path.
-// Provide a minimal fallback declaration so this file can be parsed by tools
-// that cannot open "driver/i2c_master.h". At build time the real header
-// from ESP-IDF should be available and used instead.
-#ifndef DRIVER_I2C_MASTER_H
-// Minimal forward declarations used in this translation unit
-typedef void* i2c_master_dev_handle_t;
-int i2c_master_transmit(i2c_master_dev_handle_t dev, const uint8_t* data, size_t len, int timeout);
-#endif
+
 #define LCD_RS          0x01
 #define LCD_RW          0x02
 #define LCD_EN          0x04
@@ -41,4 +33,8 @@ static void lcd_send_string(i2c_master_dev_handle_t dev, const char* str) {
     while(*str) {
         lcd_send_char(dev, *str++);
     }
+}
+
+static void lcd_init(i2c_master_dev_handle_t dev) {
+    lcd_send_byte
 }
