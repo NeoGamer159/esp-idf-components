@@ -20,11 +20,14 @@ static void lcd_send_nibble(i2c_master_dev_handle_t dev, uint8_t nibble, uint8_t
     nibble <<= 4; // Shift the nibble to the upper 4 bits
     uint8_t data = nibble | (rs ? LCD_RS : 0) | LCD_BACKLIGHT; // Set RS and backlight bits
     i2c_master_transmit(dev, &data, 1, -1);
+    LCD_DELAY_MS(1);
     // Toggle the enable pin
     data |= LCD_EN; // Set enable bit
     i2c_master_transmit(dev, &data, 1, -1);
+    LCD_DELAY_MS(1);
     data &= ~LCD_EN; // Clear enable bit
     i2c_master_transmit(dev, &data, 1, -1);  
+    LCD_DELAY_MS(1);
 }
 
 /**
@@ -80,11 +83,11 @@ void lcd_send_string(i2c_master_dev_handle_t dev, const char* str) {
  */
 void lcd_init(i2c_master_dev_handle_t dev) {
     // Wait for LCD to power up
-    LCD_DELAY_MS(50); 
+    LCD_DELAY_MS(100); 
     // Function set: 8-bit mode
     for(int i = 0; i < 3; i++) {
         lcd_send_nibble(dev, 0x03, 0); 
-        LCD_DELAY_MS(5);
+        LCD_DELAY_MS(10);
     }
     // Function set: 4-bit mode 
     lcd_send_nibble(dev, 0x02, 0);   
